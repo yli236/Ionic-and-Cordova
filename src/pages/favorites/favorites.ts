@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { IonicPage, NavController, NavParams, ItemSliding } from 'ionic-angular';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 import { Dish } from '../../shared/dish';
+import { DishdetailPage } from '../dishdetail/dishdetail';
 
 /**
  * Generated class for the FavoritesPage page.
@@ -21,7 +22,8 @@ export class FavoritesPage implements OnInit{
   errMess: string;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               private favoriteservice: FavoriteProvider,
               @Inject('BaseURL') private BaseURL) {
   }
@@ -44,5 +46,12 @@ export class FavoritesPage implements OnInit{
       errmess => this.errMess = errmess);
     item.close();
   }
+
+  dishSelected(event, dish) {
+    this.navCtrl.push(DishdetailPage, {
+      dish: dish
+    })
+  } //navigate to dishdetail page
+  
 
 }

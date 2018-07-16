@@ -19,7 +19,7 @@
 <ion-content>
   <div *ngIf="favorites">
     <ion-list>
-      <ion-item-sliding *ngFor="let favorite of favorites" #item>
+      <ion-item-sliding *ngFor="let favorite of favorites" (click)="dishSelected($event, favorite)" #item>
         <ion-item>
           <ion-thumbnail item-left>
             <img src="{{BaseURL + favorite.image}}" />
