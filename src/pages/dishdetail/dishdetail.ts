@@ -46,4 +46,6 @@ export class DishdetailPage {
     this.favorite = this.favoriteservice.addFavorite(this.dish.id);
   }
 
+  
+
 }
