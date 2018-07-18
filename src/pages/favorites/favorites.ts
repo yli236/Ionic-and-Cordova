@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { IonicPage, NavController, NavParams, ItemSliding } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ItemSliding, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 import { Dish } from '../../shared/dish';
 import { DishdetailPage } from '../dishdetail/dishdetail';
@@ -25,6 +25,9 @@ export class FavoritesPage implements OnInit{
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private favoriteservice: FavoriteProvider,
+              private toastCtrl: ToastController,
+              private loadCtrl: LoadingController,
+              private alertCtrl: AlertController,
               @Inject('BaseURL') private BaseURL) {
   }
 
@@ -41,9 +44,41 @@ export class FavoritesPage implements OnInit{
 
   deleteFavorite(item: ItemSliding, id: number) {
     console.log('delete', id);
-    this.favoriteservice.deleteFavorite(id)
-      .subscribe(favorites => this.favorites = favorites,
-      errmess => this.errMess = errmess);
+
+    let alert = this.alertCtrl.create({
+      title: 'Deleting',
+      message: 'Do you want to delete Favorite' + id,
+      buttons:[
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Delete cancelled');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            let loading = this.loadCtrl.create({
+              content: 'Deleting . . .',
+              duration: 3000
+            });
+            let toast = this.toastCtrl.create({
+              message: 'Dish '+ id + ' deleted successfully',
+              duration: 3000
+            });
+            loading.present();
+            this.favoriteservice.deleteFavorite(id)
+              .subscribe(favorites => {this.favorites = favorites; loading.dismiss(); toast.present()},
+              errmess => { this.errMess = errmess; loading.dismiss();});
+          }
+        }
+      ]
+    });
+
+    alert.present();
+    
+
     item.close();
   }
 
@@ -52,6 +87,7 @@ export class FavoritesPage implements OnInit{
       dish: dish
     })
   } //navigate to dishdetail page
+  
   
 
 }
