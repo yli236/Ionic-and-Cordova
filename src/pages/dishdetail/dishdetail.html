@@ -6,8 +6,14 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title color="primary">Dishdetail</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Dishdetail</ion-title>
+    <ion-buttons end *ngIf="dish">
+    <button ion-button (click)="presentAction(dish)" color="primary-pale" icon-only>
+      <ion-icon name="md-more" showWhen="android, windows"></ion-icon>
+      <ion-icon name="ios-more" showWhen="ios"></ion-icon>
+    </button>
+  </ion-buttons>
   </ion-navbar>
 
 </ion-header>
