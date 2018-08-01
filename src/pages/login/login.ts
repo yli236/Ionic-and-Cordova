@@ -59,7 +59,7 @@ export class LoginPage {
     this.viewCtrl.dismiss();
   }
 
-  onSubmit () {
+  onSubmit() {
     this.user.username = this.loginForm.get('username').value;
     this.user.password = this.loginForm.get('password').value;
 

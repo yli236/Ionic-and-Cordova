@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { Dish } from '../../shared/dish';
 import { DishProvider } from '../../providers/dish/dish';
 import { DishdetailPage } from '../dishdetail/dishdetail';
-import { FavoriteProvider } from '../../providers/favorite/favorite'
+import { FavoriteProvider } from '../../providers/favorite/favorite';
 
 /**
  * Generated class for the MenuPage page.
@@ -21,6 +21,7 @@ export class MenuPage implements OnInit{
 
   dishes: Dish[];
   errMess: string;
+  favorites: Dish[];
 
 
   constructor(public navCtrl: NavController,
@@ -38,7 +39,10 @@ export class MenuPage implements OnInit{
   ngOnInit(){
     this.dishservice.getDishes()
       .subscribe(dishes => this.dishes = dishes,
-      errmess => this.errMess = errmess)
+      errmess => this.errMess = errmess);
+    this.favoriteservice.getFavorites()
+      .subscribe(favorites => this.favorites = favorites,
+        errmess => errmess = this.errMess);
   }
 
   dishSelected(event, dish) {
@@ -51,10 +55,12 @@ export class MenuPage implements OnInit{
     console.log('Adding to Favorites', dish.id);
     this.favoriteservice.addFavorite(dish.id);
     this.toastCtrl.create({
-      message: 'Dish '+ dish.id + ' deleted successfully',
+      message: 'Dish '+ dish.id + ' added successfully',
       position: 'middle',
-      duration: 3000
+      duration: 1000
     }).present();
+
+    
   }
 
 }

@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ItemSliding, ToastController, Load
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 import { Dish } from '../../shared/dish';
 import { DishdetailPage } from '../dishdetail/dishdetail';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the FavoritesPage page.
@@ -80,6 +81,7 @@ export class FavoritesPage implements OnInit{
     
 
     item.close();
+
   }
 
   dishSelected(event, dish) {

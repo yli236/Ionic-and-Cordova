@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ActionSheetController, ModalController } from 'ionic-angular';
 import { Dish } from '../../shared/dish';
 import { Comment } from '../../shared/comment';
 import { FavoriteProvider } from '../../providers/favorite/favorite';
 import { CommentPage } from '../comment/comment';
+import { Storage } from '@ionic/storage';
 
 
 /**
@@ -18,13 +19,14 @@ import { CommentPage } from '../comment/comment';
   selector: 'page-dishdetail',
   templateUrl: 'dishdetail.html',
 })
-export class DishdetailPage {
+export class DishdetailPage{
 
   dish: Dish;
   errMess: String;
   avgstars: string;
   numcomments: number;
   favorite: boolean = false;
+  favorites: Dish[];
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -32,7 +34,7 @@ export class DishdetailPage {
               private favoriteservice: FavoriteProvider,
               private toastCtrl: ToastController,
               private actionsheetCtrl: ActionSheetController,
-              private modalCtrl: ModalController) {
+              private modalCtrl: ModalController,) {
                 this.dish = navParams.get('dish');
                 this.favorite = this.favoriteservice.isFavorite(this.dish.id);
                 this.numcomments = this.dish.comments.length;
@@ -46,6 +48,8 @@ export class DishdetailPage {
     console.log('ionViewDidLoad DishdetailPage');
   }
 
+  
+
   addToFavorite() {
     console.log('Adding to Favorites', this.dish.id);
     this.favorite = this.favoriteservice.addFavorite(this.dish.id);
@@ -53,6 +57,8 @@ export class DishdetailPage {
       message: 'Dish '+this.dish.id+ " added successfully",
       duration: 3000
     }).present();
+
+
   }
 
   presentAction(dish) {
@@ -83,10 +89,6 @@ export class DishdetailPage {
         }
       ]
     }).present();
-  }
-
-  dishSelected(event, dish) {
-    
   }
 
 

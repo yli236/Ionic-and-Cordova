@@ -25,7 +25,9 @@ export class MyApp {
 
   pages: Array<{title: string, icon: string,  component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor(public platform: Platform, 
+              public statusBar: StatusBar, 
+              public splashScreen: SplashScreen,
               public modalCtrl: ModalController) {
     this.initializeApp();
 
