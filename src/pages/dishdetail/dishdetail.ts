@@ -24,7 +24,7 @@ export class DishdetailPage{
 
   dish: Dish;
   errMess: String;
-  avgstars: string;
+  avgstars: string; 
   numcomments: number;
   favorite: boolean = false;
   favorites: Dish[];
